@@ -14,7 +14,9 @@ class ChannelRepo @Inject constructor(
     ChannelApi {
 
     override suspend fun fetchCategories(): ApiResponse<BaseResponse<CategoryResponse>> {
-        TODO("Not yet implemented")
+        return executeSafely(call = {
+            service.fetchCategories()
+        })
     }
 
     override suspend fun fetchEpisodes(): ApiResponse<BaseResponse<EpisodeResponse>> {

@@ -75,7 +75,7 @@ class ChannelRepoTest : BaseTestCase() {
             channelRepo = ChannelRepo(service)
             val actual: ApiResponse<BaseResponse<CategoryResponse>> = channelRepo.fetchCategories()
             //3-verify
-            Assert.assertEquals(200, (actual as ApiResponse.Success).code)
+            Assert.assertEquals(401, (actual as ApiResponse.Error).error.statusCode)
             coVerify { service.fetchCategories() }
         }
     }
