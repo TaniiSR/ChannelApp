@@ -1,0 +1,34 @@
+package com.task.channelapp.data.remote.services.channelservice
+
+import com.task.channelapp.data.remote.baseclient.ApiResponse
+import com.task.channelapp.data.remote.baseclient.BaseRepository
+import com.task.channelapp.data.remote.baseclient.models.BaseResponse
+import com.task.channelapp.data.remote.responsedtos.CategoryResponse
+import com.task.channelapp.data.remote.responsedtos.ChannelResponse
+import com.task.channelapp.data.remote.responsedtos.EpisodeResponse
+import javax.inject.Inject
+
+class ChannelRepo @Inject constructor(
+    private val service: ChannelRetroApi,
+) : BaseRepository(),
+    ChannelApi {
+
+    override suspend fun fetchCategories(): ApiResponse<BaseResponse<CategoryResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchEpisodes(): ApiResponse<BaseResponse<EpisodeResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchChannel(): ApiResponse<BaseResponse<ChannelResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    companion object {
+        const val URL_GET_EPISODES = "raw/z5AExTtw"
+        const val URL_GET_CHANNELS = "raw/Xt12uVhM"
+        const val URL_GET_CATEGORIES = "raw/A0CgArX3"
+    }
+
+}
