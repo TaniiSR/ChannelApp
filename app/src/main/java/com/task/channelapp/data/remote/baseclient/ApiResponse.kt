@@ -1,6 +1,7 @@
 package com.task.channelapp.data.remote.baseclient
 
 import com.task.channelapp.data.remote.baseclient.erros.ApiError
+import com.task.channelapp.data.remote.baseclient.models.BaseApiResponse
 
 
 sealed class ApiResponse<out T : BaseApiResponse> {

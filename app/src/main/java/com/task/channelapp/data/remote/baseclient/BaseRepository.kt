@@ -3,6 +3,7 @@ package com.task.channelapp.data.remote.baseclient
 import com.task.channelapp.data.remote.baseclient.erros.ApiError
 import com.task.channelapp.data.remote.baseclient.erros.ServerError
 import com.task.channelapp.data.remote.baseclient.interfaces.IRepository
+import com.task.channelapp.data.remote.baseclient.models.BaseApiResponse
 import com.task.channelapp.data.remote.baseclient.sealed.NetworkErrors
 import retrofit2.Response
 import com.google.gson.stream.MalformedJsonException as MalformedJsonException1
