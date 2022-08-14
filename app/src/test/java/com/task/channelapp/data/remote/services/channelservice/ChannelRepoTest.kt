@@ -136,7 +136,7 @@ class ChannelRepoTest : BaseTestCase() {
     }
 
     @Test
-    fun `get channel api success`() {
+    fun `get channels api success`() {
         //1- Mock calls
         runTest {
             val response = mockk<Response<BaseResponse<ChannelResponse>>> {
@@ -183,7 +183,7 @@ class ChannelRepoTest : BaseTestCase() {
             val actual: ApiResponse<BaseResponse<ChannelResponse>> = channelRepo.fetchChannels()
             //3-verify
             Assert.assertEquals(401, (actual as ApiResponse.Error).error.statusCode)
-            coVerify { service.fetchEpisodes() }
+            coVerify { service.fetchChannels() }
         }
     }
 
