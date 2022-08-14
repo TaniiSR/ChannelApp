@@ -6,10 +6,10 @@ import javax.inject.Inject
 class ChannelLocalRepo @Inject constructor(private val channelLocalDao: ChannelLocalDao) :
     ChannelDbService {
     override suspend fun getCategories(): List<CategoryEntity>? {
-        TODO("Not yet implemented")
+        return channelLocalDao.getAllCategories()
     }
 
     override suspend fun insertCategories(categories: List<CategoryEntity>) {
-        TODO("Not yet implemented")
+        return channelLocalDao.insertAllCategories(categories)
     }
 }
