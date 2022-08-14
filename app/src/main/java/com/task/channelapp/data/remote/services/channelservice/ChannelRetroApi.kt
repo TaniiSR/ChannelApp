@@ -15,5 +15,5 @@ interface ChannelRetroApi {
     suspend fun fetchEpisodes(): Response<BaseResponse<EpisodeResponse>>
 
     @GET(ChannelRepo.URL_GET_CHANNELS)
-    suspend fun fetchChannel(): Response<BaseResponse<ChannelResponse>>
+    suspend fun fetchChannels(): Response<BaseResponse<ChannelResponse>>
 }

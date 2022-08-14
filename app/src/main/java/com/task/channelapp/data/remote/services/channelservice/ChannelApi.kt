@@ -9,5 +9,5 @@ import com.task.channelapp.data.remote.responsedtos.EpisodeResponse
 interface ChannelApi {
     suspend fun fetchCategories(): ApiResponse<BaseResponse<CategoryResponse>>
     suspend fun fetchEpisodes(): ApiResponse<BaseResponse<EpisodeResponse>>
-    suspend fun fetchChannel(): ApiResponse<BaseResponse<ChannelResponse>>
+    suspend fun fetchChannels(): ApiResponse<BaseResponse<ChannelResponse>>
 }

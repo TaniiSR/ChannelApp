@@ -4,6 +4,7 @@ import com.task.channelapp.base.BaseTestCase
 import com.task.channelapp.data.remote.baseclient.ApiResponse
 import com.task.channelapp.data.remote.baseclient.models.BaseResponse
 import com.task.channelapp.data.remote.responsedtos.CategoryResponse
+import com.task.channelapp.data.remote.responsedtos.ChannelResponse
 import com.task.channelapp.data.remote.responsedtos.EpisodeResponse
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -133,4 +134,57 @@ class ChannelRepoTest : BaseTestCase() {
             coVerify { service.fetchEpisodes() }
         }
     }
+
+    @Test
+    fun `get channel api success`() {
+        //1- Mock calls
+        runTest {
+            val response = mockk<Response<BaseResponse<ChannelResponse>>> {
+                every { isSuccessful } returns true
+                every { code() } returns 200
+                every { body() } returns mockk {
+                    every { data } returns mockk {
+                        every { channels } returns listOf(mockk(), mockk())
+                    }
+                }
+            }
+            coEvery {
+                service.fetchChannels()
+            } returns response
+
+            //2-Call
+            channelRepo = ChannelRepo(service)
+            val actual: ApiResponse<BaseResponse<ChannelResponse>> = channelRepo.fetchChannels()
+            //3-verify
+            Assert.assertEquals(200, (actual as ApiResponse.Success).code)
+            Assert.assertEquals(
+                true,
+                (actual as ApiResponse.Success).data.data?.channels?.isNotEmpty()
+            )
+            coVerify { service.fetchChannels() }
+        }
+    }
+
+    @Test
+    fun `get Channels api Error`() {
+        //1- Mock calls
+        runTest {
+            val response = mockk<Response<BaseResponse<ChannelResponse>>> {
+                every { isSuccessful } returns false
+                every { code() } returns 401
+                every { message() } returns "Error"
+            }
+            coEvery {
+                service.fetchChannels()
+            } returns response
+
+            //2-Call
+            channelRepo = ChannelRepo(service)
+            val actual: ApiResponse<BaseResponse<ChannelResponse>> = channelRepo.fetchChannels()
+            //3-verify
+            Assert.assertEquals(401, (actual as ApiResponse.Error).error.statusCode)
+            coVerify { service.fetchEpisodes() }
+        }
+    }
+
 }
