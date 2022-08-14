@@ -6,12 +6,10 @@ import com.task.channelapp.data.remote.baseclient.models.BaseResponse
 import com.task.channelapp.data.remote.responsedtos.CategoryResponse
 import com.task.channelapp.data.remote.responsedtos.ChannelResponse
 import com.task.channelapp.data.remote.responsedtos.EpisodeResponse
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -185,6 +183,11 @@ class ChannelRepoTest : BaseTestCase() {
             Assert.assertEquals(401, (actual as ApiResponse.Error).error.statusCode)
             coVerify { service.fetchChannels() }
         }
+    }
+
+    @After
+    fun cleanUp() {
+        clearAllMocks()
     }
 
 }
