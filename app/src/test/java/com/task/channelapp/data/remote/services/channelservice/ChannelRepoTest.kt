@@ -1,3 +1,82 @@
 package com.task.channelapp.data.remote.services.channelservice
 
-class ChannelRepoTest
+import com.task.channelapp.base.BaseTestCase
+import com.task.channelapp.data.remote.baseclient.ApiResponse
+import com.task.channelapp.data.remote.baseclient.models.BaseResponse
+import com.task.channelapp.data.remote.responsedtos.CategoryResponse
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import retrofit2.Response
+
+@ExperimentalCoroutinesApi
+class ChannelRepoTest : BaseTestCase() {
+    // Subject under test
+    lateinit var channelRepo: ChannelRepo
+
+    // Use a fake Service to be injected into the Repo
+    lateinit var service: ChannelRetroApi
+
+    @Before
+    fun setUp() {
+        service = mockk()
+    }
+
+    @Test
+    fun `get Categories api success`() {
+        //1- Mock calls
+        runTest {
+            val response = mockk<Response<BaseResponse<CategoryResponse>>> {
+                every { isSuccessful } returns true
+                every { code() } returns 200
+                every { body() } returns mockk {
+                    every { data } returns mockk {
+                        every { categories } returns listOf(mockk(), mockk())
+                    }
+                }
+            }
+            coEvery {
+                service.fetchCategories()
+            } returns response
+
+            //2-Call
+            channelRepo = ChannelRepo(service)
+            val actual: ApiResponse<BaseResponse<CategoryResponse>> = channelRepo.fetchCategories()
+            //3-verify
+            Assert.assertEquals(200, (actual as ApiResponse.Success).code)
+            Assert.assertEquals(
+                true,
+                (actual as ApiResponse.Success).data.data?.categories?.isNotEmpty()
+            )
+            coVerify { service.fetchCategories() }
+        }
+    }
+
+    @Test
+    fun `get Categories api Error`() {
+        //1- Mock calls
+        runTest {
+            val response = mockk<Response<BaseResponse<CategoryResponse>>> {
+                every { isSuccessful } returns false
+                every { code() } returns 401
+                every { message() } returns "Error"
+            }
+            coEvery {
+                service.fetchCategories()
+            } returns response
+
+            //2-Call
+            channelRepo = ChannelRepo(service)
+            val actual: ApiResponse<BaseResponse<CategoryResponse>> = channelRepo.fetchCategories()
+            //3-verify
+            Assert.assertEquals(200, (actual as ApiResponse.Success).code)
+            coVerify { service.fetchCategories() }
+        }
+    }
+}
