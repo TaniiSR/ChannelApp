@@ -10,11 +10,11 @@ data class MediaEntity(
     @ColumnInfo(name = "title")
     val title: String,
     @ColumnInfo(name = "type")
-    val type: String,
+    val type: String? = null,
     @ColumnInfo(name = "id")
-    val id: String,
+    val id: String? = null,
     @ColumnInfo(name = "coverAsset")
-    val coverAsset: String,
+    val coverAsset: String? = null,
     @ColumnInfo(name = "channel")
-    val channel: ChannelEntity,
+    val channel: ChannelEntity? = null,
 )

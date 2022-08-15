@@ -10,17 +10,17 @@ data class ChannelEntity(
     @ColumnInfo(name = "title")
     val title: String,
     @ColumnInfo(name = "id")
-    val id: String,
+    val id: String? = null,
     @ColumnInfo(name = "slug")
-    val slug: String,
+    val slug: String? = null,
     @ColumnInfo(name = "mediaCount")
-    val mediaCount: Int,
+    val mediaCount: Int? = null,
     @ColumnInfo(name = "coverAsset")
-    val coverAsset: String,
+    val coverAsset: String? = null,
     @ColumnInfo(name = "iconAsset")
-    val iconAsset: String,
+    val iconAsset: String? = null,
     @ColumnInfo(name = "series")
-    val series: List<MediaEntity>,
+    val series: List<MediaEntity>? = null,
     @ColumnInfo(name = "latestMedia")
-    val latestMedia: List<MediaEntity>,
+    val latestMedia: List<MediaEntity>? = null,
 )

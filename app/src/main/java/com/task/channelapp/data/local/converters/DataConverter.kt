@@ -68,4 +68,12 @@ class DataConverter {
         return gson.fromJson(rates, type)
     }
 
+    @TypeConverter
+    fun channelToJson(value: ChannelEntity?): String? = Gson().toJson(value)
+
+    @TypeConverter
+    fun stringToChannel(string: String?): ChannelEntity? {
+        return Gson().fromJson(string, ChannelEntity::class.java)
+    }
+
 }
