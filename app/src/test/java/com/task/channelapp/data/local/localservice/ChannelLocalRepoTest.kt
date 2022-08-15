@@ -3,6 +3,7 @@ package com.task.channelapp.data.local.localservice
 import com.task.channelapp.base.BaseTestCase
 import com.task.channelapp.data.local.entities.CategoryEntity
 import com.task.channelapp.data.local.entities.ChannelEntity
+import com.task.channelapp.data.local.entities.MediaEntity
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -147,6 +148,48 @@ class ChannelLocalRepoTest : BaseTestCase() {
 
         }
     }
+
+    @Test
+    fun `get episodes list success`() {
+        //1- Mock calls
+        runTest {
+            val response = mockk<ArrayList<MediaEntity>>()
+
+            coEvery {
+                localDao.getAllEpisodes()
+            } returns response
+
+            //2-Call
+            channelRepositoryLocal = ChannelLocalRepo(localDao)
+            val actual: List<MediaEntity>? = channelRepositoryLocal.getEpisodes()
+            //3-verify
+            Assert.assertEquals(true, actual != null)
+            coVerify { localDao.getAllEpisodes() }
+
+        }
+    }
+
+
+    @Test
+    fun `get episodes list error`() {
+        //1- Mock calls
+        runTest {
+            val response = null
+
+            coEvery {
+                localDao.getAllEpisodes()
+            } returns response
+
+            //2-Call
+            channelRepositoryLocal = ChannelLocalRepo(localDao)
+            val actual: List<MediaEntity>? = channelRepositoryLocal.getEpisodes()
+            //3-verify
+            Assert.assertEquals(true, actual == null)
+            coVerify { localDao.getAllEpisodes() }
+
+        }
+    }
+
 
     @After
     fun cleanUp() {

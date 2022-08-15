@@ -20,7 +20,7 @@ class ChannelLocalRepo @Inject constructor(private val channelLocalDao: ChannelL
     }
 
     override suspend fun insertChannels(channels: List<ChannelEntity>) {
-        TODO("Not yet implemented")
+        channelLocalDao.insertAllChannels(channels)
     }
 
     override suspend fun getEpisodes(): List<MediaEntity>? {
