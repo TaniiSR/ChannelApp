@@ -113,4 +113,8 @@ class DataRepository @Inject constructor(
             }
         }
     }
+
+    override suspend fun getAllChannels(isRefresh: Boolean): DataResponse<ChannelDTO> {
+        TODO("Not yet implemented")
+    }
 }

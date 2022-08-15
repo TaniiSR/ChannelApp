@@ -8,6 +8,7 @@ import com.task.channelapp.data.local.localservice.ChannelDbService
 import com.task.channelapp.data.remote.baseclient.ApiResponse
 import com.task.channelapp.data.remote.baseclient.models.BaseResponse
 import com.task.channelapp.data.remote.responsedtos.CategoryResponse
+import com.task.channelapp.data.remote.responsedtos.ChannelResponse
 import com.task.channelapp.data.remote.responsedtos.EpisodeResponse
 import com.task.channelapp.data.remote.services.channelservice.ChannelApi
 import com.task.channelapp.domain.base.DataResponse
@@ -386,6 +387,251 @@ class DataRepositoryTest : BaseTestCase() {
             )
             coVerify { remoteSource.fetchEpisodes() }
             coVerify { localSource.getEpisodes() }
+        }
+    }
+
+    @Test
+    fun `get channels api with local empty data success`() {
+        //1- Mock calls
+        runTest {
+            val apiResponse = mockk<ApiResponse.Success<BaseResponse<ChannelResponse>>> {
+                every { data } returns mockk {
+                    every { data } returns mockk {
+                        every { channels } returns listOf(mockk(relaxed = true))
+                    }
+                }
+                every { code } returns 200
+            }
+
+            val channelList =
+                apiResponse.data.data?.channels?.map { channel ->
+                    ChannelData(
+                        id = channel.id,
+                        title = channel.title ?: "",
+                        mediaCount = channel.mediaCount ?: -1,
+                        coverAsset = channel.coverAsset?.url ?: "",
+                        iconAsset = channel.iconAsset?.thumbnailUrl ?: "",
+                        latestMedia = channel.latestMedia?.map { media ->
+                            MediaData(
+                                id = media.id,
+                                title = media.title ?: "",
+                                type = media.type ?: "",
+                                coverAsset = media.coverAsset?.url ?: ""
+                            )
+                        } ?: listOf(),
+                        series = channel.series?.map { media ->
+                            MediaData(
+                                id = media.id,
+                                title = media.title ?: "",
+                                type = media.type ?: "",
+                                coverAsset = media.coverAsset?.url ?: "",
+                                channel = ChannelData(title = media.channel?.title ?: "")
+                            )
+                        } ?: listOf()
+                    )
+                } ?: listOf()
+
+            val entityList = channelList.map { channel ->
+                ChannelEntity(
+                    id = channel.id,
+                    title = channel.title,
+                    mediaCount = channel.mediaCount,
+                    coverAsset = channel.coverAsset,
+                    iconAsset = channel.iconAsset,
+                    series = channel.series.map { media ->
+                        MediaEntity(
+                            id = media.id,
+                            title = media.title,
+                            type = media.type,
+                            coverAsset = media.coverAsset,
+                            channel = ChannelEntity(title = media.channel.title)
+                        )
+                    },
+                    latestMedia = channel.latestMedia.map { media ->
+                        MediaEntity(
+                            id = media.id,
+                            title = media.title,
+                            type = media.type,
+                            coverAsset = media.coverAsset
+                        )
+                    }
+                )
+            }
+
+            coEvery {
+                remoteSource.fetchChannels()
+            } returns apiResponse
+            coEvery {
+                localSource.insertChannels(entityList)
+            } returns Unit
+
+            coEvery {
+                localSource.getChannels()
+            } returns null
+
+            //2-Call
+            dataRepo = DataRepository(remoteSource, localSource)
+            val actual: DataResponse<ChannelDTO> = dataRepo.getAllChannels(false)
+            //3-verify
+            Assert.assertEquals(
+                1,
+                (actual as DataResponse.Success<ChannelDTO>).data.channels.size
+            )
+            coVerify { remoteSource.fetchChannels() }
+            coVerify { localSource.getChannels() }
+            coVerify {
+                localSource.insertChannels(entityList)
+            }
+        }
+    }
+
+
+    @Test
+    fun `get channels api with refresh data success`() {
+        //1- Mock calls
+        runTest {
+            val apiResponse = mockk<ApiResponse.Success<BaseResponse<ChannelResponse>>> {
+                every { data } returns mockk {
+                    every { data } returns mockk {
+                        every { channels } returns listOf(mockk(relaxed = true))
+                    }
+                }
+                every { code } returns 200
+            }
+
+            val channelList =
+                apiResponse.data.data?.channels?.map { channel ->
+                    ChannelData(
+                        id = channel.id,
+                        title = channel.title ?: "",
+                        mediaCount = channel.mediaCount ?: -1,
+                        coverAsset = channel.coverAsset?.url ?: "",
+                        iconAsset = channel.iconAsset?.thumbnailUrl ?: "",
+                        latestMedia = channel.latestMedia?.map { media ->
+                            MediaData(
+                                id = media.id,
+                                title = media.title ?: "",
+                                type = media.type ?: "",
+                                coverAsset = media.coverAsset?.url ?: ""
+                            )
+                        } ?: listOf(),
+                        series = channel.series?.map { media ->
+                            MediaData(
+                                id = media.id,
+                                title = media.title ?: "",
+                                type = media.type ?: "",
+                                coverAsset = media.coverAsset?.url ?: "",
+                                channel = ChannelData(title = media.channel?.title ?: "")
+                            )
+                        } ?: listOf()
+                    )
+                } ?: listOf()
+
+            val entityList = channelList.map { channel ->
+                ChannelEntity(
+                    id = channel.id,
+                    title = channel.title,
+                    mediaCount = channel.mediaCount,
+                    coverAsset = channel.coverAsset,
+                    iconAsset = channel.iconAsset,
+                    series = channel.series.map { media ->
+                        MediaEntity(
+                            id = media.id,
+                            title = media.title,
+                            type = media.type,
+                            coverAsset = media.coverAsset,
+                            channel = ChannelEntity(title = media.channel.title)
+                        )
+                    },
+                    latestMedia = channel.latestMedia.map { media ->
+                        MediaEntity(
+                            id = media.id,
+                            title = media.title,
+                            type = media.type,
+                            coverAsset = media.coverAsset
+                        )
+                    }
+                )
+            }
+
+            coEvery {
+                remoteSource.fetchChannels()
+            } returns apiResponse
+            coEvery {
+                localSource.insertChannels(entityList)
+            } returns Unit
+
+            coEvery {
+                localSource.getEpisodes()
+            } returns null
+
+            //2-Call
+            dataRepo = DataRepository(remoteSource, localSource)
+            val actual: DataResponse<ChannelDTO> = dataRepo.getAllChannels(true)
+            //3-verify
+            Assert.assertEquals(
+                1,
+                (actual as DataResponse.Success<ChannelDTO>).data.channels.size
+            )
+            coVerify { remoteSource.fetchChannels() }
+            coVerify { localSource.getChannels() }
+            coVerify {
+                localSource.insertChannels(entityList)
+            }
+        }
+    }
+
+    @Test
+    fun `get channel Local success`() {
+        //1- Mock calls
+        runTest {
+            val response = arrayListOf(mockk<ChannelEntity>(relaxed = true))
+            coEvery {
+                localSource.getChannels()
+            } returns response
+
+            //2-Call
+            dataRepo = DataRepository(remoteSource, localSource)
+            val actual: DataResponse<ChannelDTO> = dataRepo.getAllChannels(false)
+            //3-verify
+            Assert.assertEquals(
+                1,
+                (actual as DataResponse.Success<ChannelDTO>).data.channels.size
+            )
+            coVerify { localSource.getChannels() }
+        }
+    }
+
+    @Test
+    fun `get channels api Error`() {
+        //1- Mock calls
+        runTest {
+            val apiResponse = mockk<ApiResponse.Error> {
+                every { error } returns mockk {
+                    every { message } returns "Error"
+                    every { statusCode } returns 401
+                    every { actualCode } returns "401"
+                }
+            }
+
+            coEvery {
+                remoteSource.fetchChannels()
+            } returns apiResponse
+
+            coEvery {
+                localSource.getChannels()
+            } returns null
+
+            //2-Call
+            dataRepo = DataRepository(remoteSource, localSource)
+            val actual: DataResponse<ChannelDTO> = dataRepo.getAllChannels(false)
+            //3-verify
+            Assert.assertEquals(
+                401,
+                (actual as DataResponse.Error).error.code
+            )
+            coVerify { remoteSource.fetchChannels() }
+            coVerify { localSource.getChannels() }
         }
     }
 
