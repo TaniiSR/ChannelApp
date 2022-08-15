@@ -190,6 +190,24 @@ class ChannelLocalRepoTest : BaseTestCase() {
         }
     }
 
+    @Test
+    fun `insert episodes list success`() {
+        //1- Mock calls
+        runTest {
+            val list = mockk<ArrayList<MediaEntity>>()
+
+            coEvery {
+                localDao.insertAllEpisodes(list)
+            } returns Unit
+
+            //2-Call
+            channelRepositoryLocal = ChannelLocalRepo(localDao)
+            channelRepositoryLocal.insertEpisodes(list)
+            //3-verify
+            coVerify { localDao.insertAllEpisodes(list) }
+
+        }
+    }
 
     @After
     fun cleanUp() {
