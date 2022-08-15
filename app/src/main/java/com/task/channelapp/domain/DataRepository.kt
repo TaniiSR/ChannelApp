@@ -10,6 +10,7 @@ import com.task.channelapp.domain.base.DataError
 import com.task.channelapp.domain.base.DataResponse
 import com.task.channelapp.domain.dtos.CategoryDTO
 import com.task.channelapp.domain.dtos.CategoryData
+import com.task.channelapp.domain.dtos.MediaDTO
 import com.task.channelapp.domain.interfaces.ICategoryDataRepo
 import com.task.channelapp.domain.interfaces.IChannelDataRepo
 import com.task.channelapp.domain.interfaces.IEpisodeDataRepo
@@ -56,5 +57,9 @@ class DataRepository @Inject constructor(
                 }
             }
         }
+    }
+
+    override suspend fun getAllNewEpisodes(isRefresh: Boolean): DataResponse<MediaDTO> {
+        TODO("Not yet implemented")
     }
 }

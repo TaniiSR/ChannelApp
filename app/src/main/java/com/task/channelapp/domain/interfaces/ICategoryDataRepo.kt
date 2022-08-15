@@ -5,5 +5,4 @@ import com.task.channelapp.domain.dtos.CategoryDTO
 
 interface ICategoryDataRepo {
     suspend fun getAllCategories(isRefresh: Boolean): DataResponse<CategoryDTO>
-
 }

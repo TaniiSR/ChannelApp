@@ -2,14 +2,16 @@ package com.task.channelapp.domain
 
 import com.task.channelapp.base.BaseTestCase
 import com.task.channelapp.data.local.entities.CategoryEntity
+import com.task.channelapp.data.local.entities.ChannelEntity
+import com.task.channelapp.data.local.entities.MediaEntity
 import com.task.channelapp.data.local.localservice.ChannelDbService
 import com.task.channelapp.data.remote.baseclient.ApiResponse
 import com.task.channelapp.data.remote.baseclient.models.BaseResponse
 import com.task.channelapp.data.remote.responsedtos.CategoryResponse
+import com.task.channelapp.data.remote.responsedtos.EpisodeResponse
 import com.task.channelapp.data.remote.services.channelservice.ChannelApi
 import com.task.channelapp.domain.base.DataResponse
-import com.task.channelapp.domain.dtos.CategoryDTO
-import com.task.channelapp.domain.dtos.CategoryData
+import com.task.channelapp.domain.dtos.*
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -195,6 +197,197 @@ class DataRepositoryTest : BaseTestCase() {
         }
     }
 
+    @Test
+    fun `get episode api with local empty data success`() {
+        //1- Mock calls
+        runTest {
+            val apiResponse = mockk<ApiResponse.Success<BaseResponse<EpisodeResponse>>> {
+                every { data } returns mockk {
+                    every { data } returns mockk {
+                        every { media } returns listOf(mockk(relaxed = true))
+                    }
+                }
+                every { code } returns 200
+            }
+            val episodeList =
+                apiResponse.data.data?.media?.map { media ->
+                    MediaData(
+                        id = media.id,
+                        title = media.title ?: "",
+                        type = media.type ?: "",
+                        coverAsset = media.coverAsset?.url ?: "",
+                        channel = ChannelData(title = media.channel?.title ?: "")
+                    )
+                } ?: listOf()
+            coEvery {
+                remoteSource.fetchEpisodes()
+            } returns apiResponse
+            coEvery {
+                localSource.insertEpisodes(
+                    episodeList.map { media ->
+                        MediaEntity(
+                            id = media.id,
+                            title = media.title,
+                            type = media.type,
+                            coverAsset = media.coverAsset,
+                            channel = ChannelEntity(title = media.channel.title)
+                        )
+                    }
+                )
+            } returns Unit
+
+            coEvery {
+                localSource.getEpisodes()
+            } returns null
+
+            //2-Call
+            dataRepo = DataRepository(remoteSource, localSource)
+            val actual: DataResponse<MediaDTO> = dataRepo.getAllNewEpisodes(false)
+            //3-verify
+            Assert.assertEquals(
+                1,
+                (actual as DataResponse.Success<MediaDTO>).data.media.size
+            )
+            coVerify { remoteSource.fetchEpisodes() }
+            coVerify { localSource.getEpisodes() }
+            coVerify {
+                localSource.insertEpisodes(
+                    episodeList.map { media ->
+                        MediaEntity(
+                            id = media.id,
+                            title = media.title,
+                            type = media.type,
+                            coverAsset = media.coverAsset,
+                            channel = ChannelEntity(title = media.channel.title)
+                        )
+                    }
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `get episodes api with refresh data success`() {
+        //1- Mock calls
+        runTest {
+            val apiResponse = mockk<ApiResponse.Success<BaseResponse<EpisodeResponse>>> {
+                every { data } returns mockk {
+                    every { data } returns mockk {
+                        every { media } returns listOf(mockk(relaxed = true))
+                    }
+                }
+                every { code } returns 200
+            }
+            val episodeList =
+                apiResponse.data.data?.media?.map { media ->
+                    MediaData(
+                        id = media.id,
+                        title = media.title ?: "",
+                        type = media.type ?: "",
+                        coverAsset = media.coverAsset?.url ?: "",
+                        channel = ChannelData(title = media.channel?.title ?: "")
+                    )
+                } ?: listOf()
+            coEvery {
+                remoteSource.fetchEpisodes()
+            } returns apiResponse
+            coEvery {
+                localSource.insertEpisodes(
+                    episodeList.map { media ->
+                        MediaEntity(
+                            id = media.id,
+                            title = media.title,
+                            type = media.type,
+                            coverAsset = media.coverAsset,
+                            channel = ChannelEntity(title = media.channel.title)
+                        )
+                    }
+                )
+            } returns Unit
+
+            coEvery {
+                localSource.getEpisodes()
+            } returns listOf(mockk())
+
+            //2-Call
+            dataRepo = DataRepository(remoteSource, localSource)
+            val actual: DataResponse<MediaDTO> = dataRepo.getAllNewEpisodes(true)
+            //3-verify
+            Assert.assertEquals(
+                1,
+                (actual as DataResponse.Success<MediaDTO>).data.media.size
+            )
+            coVerify { remoteSource.fetchEpisodes() }
+            coVerify { localSource.getEpisodes() }
+            coVerify {
+                localSource.insertEpisodes(
+                    episodeList.map { media ->
+                        MediaEntity(
+                            id = media.id,
+                            title = media.title,
+                            type = media.type,
+                            coverAsset = media.coverAsset,
+                            channel = ChannelEntity(title = media.channel.title)
+                        )
+                    }
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `get episode Local success`() {
+        //1- Mock calls
+        runTest {
+            val response = arrayListOf(mockk<MediaEntity>(relaxed = true))
+            coEvery {
+                localSource.getEpisodes()
+            } returns response
+
+            //2-Call
+            dataRepo = DataRepository(remoteSource, localSource)
+            val actual: DataResponse<MediaDTO> = dataRepo.getAllNewEpisodes(false)
+            //3-verify
+            Assert.assertEquals(
+                1,
+                (actual as DataResponse.Success<MediaDTO>).data.media.size
+            )
+            coVerify { localSource.getEpisodes() }
+        }
+    }
+
+    @Test
+    fun `get episodes api Error`() {
+        //1- Mock calls
+        runTest {
+            val apiResponse = mockk<ApiResponse.Error> {
+                every { error } returns mockk {
+                    every { message } returns "Error"
+                    every { statusCode } returns 401
+                    every { actualCode } returns "401"
+                }
+            }
+
+            coEvery {
+                remoteSource.fetchEpisodes()
+            } returns apiResponse
+
+            coEvery {
+                localSource.getEpisodes()
+            } returns null
+
+            //2-Call
+            dataRepo = DataRepository(remoteSource, localSource)
+            val actual: DataResponse<MediaDTO> = dataRepo.getAllNewEpisodes(false)
+            //3-verify
+            Assert.assertEquals(
+                401,
+                (actual as DataResponse.Error).error.code
+            )
+            coVerify { remoteSource.fetchEpisodes() }
+            coVerify { localSource.getCategories() }
+        }
+    }
 
     @After
     fun cleanUp() {
