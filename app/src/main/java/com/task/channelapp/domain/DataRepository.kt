@@ -7,6 +7,7 @@ import com.task.channelapp.data.local.localservice.ChannelDbService
 import com.task.channelapp.data.remote.baseclient.ApiResponse
 import com.task.channelapp.data.remote.baseclient.models.BaseResponse
 import com.task.channelapp.data.remote.responsedtos.CategoryResponse
+import com.task.channelapp.data.remote.responsedtos.ChannelResponse
 import com.task.channelapp.data.remote.responsedtos.EpisodeResponse
 import com.task.channelapp.data.remote.services.channelservice.ChannelApi
 import com.task.channelapp.domain.base.DataError
@@ -115,6 +116,110 @@ class DataRepository @Inject constructor(
     }
 
     override suspend fun getAllChannels(isRefresh: Boolean): DataResponse<ChannelDTO> {
-        TODO("Not yet implemented")
+        val channels = localRepository.getChannels()
+        return when {
+            channels?.isNotEmpty() == true && !isRefresh -> {
+                val channelList = channels.map { entity ->
+                    ChannelData(
+                        id = entity.id,
+                        title = entity.title ?: "",
+                        mediaCount = entity.mediaCount ?: -1,
+                        coverAsset = entity.coverAsset ?: "",
+                        iconAsset = entity.iconAsset ?: "",
+                        latestMedia = entity.latestMedia?.map { media ->
+                            MediaData(
+                                id = media.id,
+                                title = media.title ?: "",
+                                type = media.type ?: "",
+                                coverAsset = media.coverAsset ?: ""
+                            )
+                        } ?: listOf(),
+                        series = entity.series?.map { media ->
+                            MediaData(
+                                id = media.id,
+                                title = media.title ?: "",
+                                type = media.type ?: "",
+                                coverAsset = media.coverAsset ?: "",
+                                channel = ChannelData(title = media.channel?.title ?: "")
+                            )
+                        } ?: listOf()
+                    )
+                }
+                DataResponse.Success(data = ChannelDTO(channelList))
+            }
+            else -> {
+                when (val response: ApiResponse<BaseResponse<ChannelResponse>> =
+                    remoteRepository.fetchChannels()) {
+                    is ApiResponse.Success -> {
+                        val channels =
+                            response.data.data?.channels?.map { channel ->
+                                ChannelData(
+                                    id = channel.id,
+                                    title = channel.title ?: "",
+                                    mediaCount = channel.mediaCount ?: -1,
+                                    coverAsset = channel.coverAsset?.url ?: "",
+                                    iconAsset = channel.iconAsset?.thumbnailUrl ?: "",
+                                    latestMedia = channel.latestMedia?.map { media ->
+                                        MediaData(
+                                            id = media.id,
+                                            title = media.title ?: "",
+                                            type = media.type ?: "",
+                                            coverAsset = media.coverAsset?.url ?: ""
+                                        )
+                                    } ?: listOf(),
+                                    series = channel.series?.map { media ->
+                                        MediaData(
+                                            id = media.id,
+                                            title = media.title ?: "",
+                                            type = media.type ?: "",
+                                            coverAsset = media.coverAsset?.url ?: "",
+                                            channel = ChannelData(
+                                                title = media.channel?.title ?: ""
+                                            )
+                                        )
+                                    } ?: listOf()
+                                )
+                            } ?: listOf()
+                        val entityList = channels.map { channel ->
+                            ChannelEntity(
+                                id = channel.id,
+                                title = channel.title,
+                                mediaCount = channel.mediaCount,
+                                coverAsset = channel.coverAsset,
+                                iconAsset = channel.iconAsset,
+                                series = channel.series.map { media ->
+                                    MediaEntity(
+                                        id = media.id,
+                                        title = media.title,
+                                        type = media.type,
+                                        coverAsset = media.coverAsset,
+                                        channel = ChannelEntity(title = media.channel.title)
+                                    )
+                                },
+                                latestMedia = channel.latestMedia.map { media ->
+                                    MediaEntity(
+                                        id = media.id,
+                                        title = media.title,
+                                        type = media.type,
+                                        coverAsset = media.coverAsset
+                                    )
+                                }
+                            )
+                        }
+
+                        localRepository.insertChannels(entityList)
+                        DataResponse.Success(ChannelDTO(channels))
+                    }
+                    is ApiResponse.Error -> {
+                        DataResponse.Error(
+                            DataError(
+                                response.error.statusCode,
+                                response.error.message
+                            )
+                        )
+                    }
+                }
+            }
+        }
     }
 }

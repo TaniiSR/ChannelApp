@@ -562,7 +562,7 @@ class DataRepositoryTest : BaseTestCase() {
             } returns Unit
 
             coEvery {
-                localSource.getEpisodes()
+                localSource.getChannels()
             } returns null
 
             //2-Call
