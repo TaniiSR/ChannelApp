@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class Channel(
     @SerializedName("title")
     val title: String? = null,
+    @SerializedName("id")
+    val id: String? = null,
     @SerializedName("slug")
     val slug: String? = null,
     @SerializedName("mediaCount")
