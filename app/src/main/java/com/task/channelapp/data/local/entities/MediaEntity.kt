@@ -8,13 +8,13 @@ import androidx.room.PrimaryKey
 data class MediaEntity(
     @PrimaryKey
     @ColumnInfo(name = "title")
-    val title: String? = null,
+    val title: String,
     @ColumnInfo(name = "type")
-    val type: String? = null,
+    val type: String,
     @ColumnInfo(name = "id")
-    val id: String? = null,
+    val id: String,
     @ColumnInfo(name = "coverAsset")
-    val coverAsset: String? = null,
+    val coverAsset: String,
     @ColumnInfo(name = "channel")
-    val channel: ChannelEntity? = null,
+    val channel: ChannelEntity,
 )

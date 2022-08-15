@@ -1,6 +1,8 @@
 package com.task.channelapp.data.local.localservice
 
 import com.task.channelapp.data.local.entities.CategoryEntity
+import com.task.channelapp.data.local.entities.ChannelEntity
+import com.task.channelapp.data.local.entities.MediaEntity
 import javax.inject.Inject
 
 class ChannelLocalRepo @Inject constructor(private val channelLocalDao: ChannelLocalDao) :
@@ -11,5 +13,21 @@ class ChannelLocalRepo @Inject constructor(private val channelLocalDao: ChannelL
 
     override suspend fun insertCategories(categories: List<CategoryEntity>) {
         return channelLocalDao.insertAllCategories(categories)
+    }
+
+    override suspend fun getChannels(): List<ChannelEntity>? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertChannels(channels: List<ChannelEntity>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getEpisodes(): List<MediaEntity>? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertEpisodes(episodes: List<MediaEntity>) {
+        TODO("Not yet implemented")
     }
 }

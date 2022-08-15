@@ -2,6 +2,7 @@ package com.task.channelapp.data.local.localservice
 
 import com.task.channelapp.base.BaseTestCase
 import com.task.channelapp.data.local.entities.CategoryEntity
+import com.task.channelapp.data.local.entities.ChannelEntity
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -83,6 +84,47 @@ class ChannelLocalRepoTest : BaseTestCase() {
             channelRepositoryLocal.insertCategories(list)
             //3-verify
             coVerify { localDao.insertAllCategories(list) }
+
+        }
+    }
+
+    @Test
+    fun `get channels list success`() {
+        //1- Mock calls
+        runTest {
+            val response = mockk<ArrayList<ChannelEntity>>()
+
+            coEvery {
+                localDao.getAllChannels()
+            } returns response
+
+            //2-Call
+            channelRepositoryLocal = ChannelLocalRepo(localDao)
+            val actual: List<ChannelEntity>? = channelRepositoryLocal.getChannels()
+            //3-verify
+            Assert.assertEquals(true, actual != null)
+            coVerify { localDao.getAllChannels() }
+
+        }
+    }
+
+
+    @Test
+    fun `get channels list error`() {
+        //1- Mock calls
+        runTest {
+            val response = null
+
+            coEvery {
+                localDao.getAllChannels()
+            } returns response
+
+            //2-Call
+            channelRepositoryLocal = ChannelLocalRepo(localDao)
+            val actual: List<ChannelEntity>? = channelRepositoryLocal.getChannels()
+            //3-verify
+            Assert.assertEquals(true, actual == null)
+            coVerify { localDao.getAllChannels() }
 
         }
     }

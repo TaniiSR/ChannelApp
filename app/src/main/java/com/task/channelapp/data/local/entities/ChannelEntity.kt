@@ -8,19 +8,19 @@ import androidx.room.PrimaryKey
 data class ChannelEntity(
     @PrimaryKey
     @ColumnInfo(name = "title")
-    val title: String? = null,
+    val title: String,
     @ColumnInfo(name = "id")
-    val id: String? = null,
+    val id: String,
     @ColumnInfo(name = "slug")
-    val slug: String? = null,
+    val slug: String,
     @ColumnInfo(name = "mediaCount")
-    val mediaCount: Int? = null,
+    val mediaCount: Int,
     @ColumnInfo(name = "coverAsset")
-    val coverAsset: String? = null,
+    val coverAsset: String,
     @ColumnInfo(name = "iconAsset")
-    val iconAsset: String? = null,
+    val iconAsset: String,
     @ColumnInfo(name = "series")
-    val series: List<MediaEntity>? = null,
+    val series: List<MediaEntity>,
     @ColumnInfo(name = "latestMedia")
-    val latestMedia: List<MediaEntity>? = null,
+    val latestMedia: List<MediaEntity>,
 )
