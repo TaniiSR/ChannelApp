@@ -385,7 +385,7 @@ class DataRepositoryTest : BaseTestCase() {
                 (actual as DataResponse.Error).error.code
             )
             coVerify { remoteSource.fetchEpisodes() }
-            coVerify { localSource.getCategories() }
+            coVerify { localSource.getEpisodes() }
         }
     }
 
