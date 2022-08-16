@@ -2,15 +2,41 @@
     <!-- Base application theme. -->
     <style name="Theme.ChannelApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/appPurple200</item>
-        <item name="colorPrimaryVariant">@color/appTeal700</item>
-        <item name="colorOnPrimary">@color/appWhite</item>
+        <item name="colorPrimary">@color/appPrimary</item>
+        <item name="colorPrimaryVariant">@color/appPrimary</item>
+        <item name="colorOnPrimary">@color/appPrimary</item>
+        <item name="colorAccent">@color/appGreyLight</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/appTeal200</item>
-        <item name="colorSecondaryVariant">@color/appTeal700</item>
-        <item name="colorOnSecondary">@color/appBlack</item>
+        <item name="colorSecondary">@color/appPrimary</item>
+        <item name="colorSecondaryVariant">@color/appPrimary</item>
+        <item name="colorOnSecondary">@color/appPrimary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        \        <!-- Primary brand color. -->
+        <item name="colorPrimaryDark">@color/appPrimary</item>
+        <item name="android:colorBackground">@color/appPrimary</item>
+
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
+        <item name="android:layoutDirection">ltr</item>
+        
+        <!-- Text Colors -->
+        <item name="prefixTextColor">@color/appGrey</item>
+        <item name="hintTextColor">@color/appGrey</item>
+        <item name="appGreyDarkTextColor">@color/appDarkGrey</item>
+        <item name="appWhiteColor">@color/appWhite</item>
+        <item name="appGreyLightColor">@color/appGrey</item>
+
+        <!-- Start new activity animation slide in and slide out  -->
+        <item name="android:windowAnimationStyle">@style/appCustomActivityAnimation</item>
+    </style>
+
+    <style name="appCustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <!-- specify enter and exit transitions -->
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 </resources>
