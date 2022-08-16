@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="appPurple200">#FFBB86FC</color>
-    <color name="appTeal200">#FF03DAC5</color>
-    <color name="appTeal700">#FF018786</color>
     <color name="appBlack">#FF000000</color>
     <color name="appWhite">#FFFFFFFF</color>
     <!--    color primary-->
@@ -14,8 +11,8 @@
     <!--    color primary light-->
     <color name="appPrimaryLight">#007aff</color>
     <!--    color Grey Dark-->
-    <color name="appBlueGrey">#95989D</color>
+    <color name="appDarkGrey">#95989D</color>
 
     <color name="appGrey">#C1C1C1</color>
-    <color name="cuGreyLight">#3395989D</color>
+    <color name="appGreyLight">#3395989D</color>
 </resources>
