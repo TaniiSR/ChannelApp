@@ -15,5 +15,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, IMain>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getDataFromRepos(false)
     }
 }
