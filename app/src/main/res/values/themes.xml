@@ -31,6 +31,8 @@
         <!-- Start new activity animation slide in and slide out  -->
         <item name="android:windowAnimationStyle">@style/appCustomActivityAnimation</item>
 
+        <item name="tbTitleStyle">@style/App.Widget.TextView.LightGrey.Bold.XLarge</item>
+        <item name="tbEndTextStyle">@style/App.Widget.TextView.LightGrey.Bold.XSmall</item>
     </style>
 
     <style name="appCustomActivityAnimation" parent="@android:style/Animation.Activity">

@@ -58,6 +58,10 @@
         <item name="android:textSize">@dimen/app_text_size_h1</item>
     </style>
 
+    <style name="App.Widget.TextView.LightGrey.Bold.XSmall" parent="App.Widget.TextView.LightGrey.Bold">
+        <item name="android:textSize">@dimen/app_text_size_c1</item>
+    </style>
+
     <!--Grey Bold -->
     <style name="App.Widget.TextView.Grey.Bold.Large" parent="App.Widget.TextView.Grey.Bold">
         <item name="android:textSize">@dimen/app_text_size_h4</item>
