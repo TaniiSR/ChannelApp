@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="App.TextAppearance.TextView.Bold" parent="">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="font">@font/roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:font" tools:targetApi="o">@font/roboto_bold</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="App.TextAppearance.TextView.Medium" parent="">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="font">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:font" tools:targetApi="o">@font/roboto_medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="App.Widget.TextView.Grey.Bold" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/App.TextAppearance.TextView.Bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/appGreyDarkTextColor</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <style name="App.Widget.TextView.LightGrey.Bold" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/App.TextAppearance.TextView.Bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/appGreyLightColor</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <style name="App.Widget.TextView.Grey.SemiBold" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/App.TextAppearance.TextView.Medium</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/appGreyDarkTextColor</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <style name="App.Widget.TextView.White.Bold" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/App.TextAppearance.TextView.Bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/appWhiteColor</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <!-- Light Grey Bold -->
+    <style name="App.Widget.TextView.LightGrey.Bold.XLarge" parent="App.Widget.TextView.LightGrey.Bold">
+        <item name="android:textSize">@dimen/app_text_size_h1</item>
+    </style>
+
+    <!--Grey Bold -->
+    <style name="App.Widget.TextView.Grey.Bold.Large" parent="App.Widget.TextView.Grey.Bold">
+        <item name="android:textSize">@dimen/app_text_size_h4</item>
+    </style>
+
+    <style name="App.Widget.TextView.Grey.Bold.Small" parent="App.Widget.TextView.Grey.Bold">
+        <item name="android:textSize">@dimen/app_text_size_c3</item>
+    </style>
+
+    <!--Grey SemiBold -->
+    <style name="App.Widget.TextView.Grey.SemiBold.Normal" parent="App.Widget.TextView.Grey.SemiBold">
+        <item name="android:textSize">@dimen/app_text_size_c6</item>
+    </style>
+
+    <!--White Bold -->
+    <style name="App.Widget.TextView.White.Bold.Large" parent="App.Widget.TextView.White.Bold">
+        <item name="android:textSize">@dimen/app_text_size_h4</item>
+    </style>
+
+    <style name="App.Widget.TextView.White.Bold.Normal" parent="App.Widget.TextView.White.Bold">
+        <item name="android:textSize">@dimen/app_text_size_c7</item>
+    </style>
+
+</resources>
