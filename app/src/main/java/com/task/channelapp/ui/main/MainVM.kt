@@ -8,6 +8,7 @@ import com.task.channelapp.domain.interfaces.ICategoryDataRepo
 import com.task.channelapp.domain.interfaces.IChannelDataRepo
 import com.task.channelapp.domain.interfaces.IEpisodeDataRepo
 import com.task.channelapp.utils.base.BaseViewModel
+import com.task.channelapp.utils.base.sealed.UIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,13 +30,19 @@ class MainVM @Inject constructor(
     private val _categories: MutableLiveData<List<CategoryData>> = MutableLiveData()
     override val categories: LiveData<List<CategoryData>> = _categories
 
+    private val _uiState: MutableLiveData<UIEvent> = MutableLiveData()
+    override val uiState: LiveData<UIEvent> = _uiState
+
     override fun getDataFromRepos(isRefresh: Boolean) {
+        _uiState.value = UIEvent.Loading
         fetchEpisodesChannelsAndCategories(isRefresh) { episodesResponse,
                                                         channelsResponse,
                                                         categoriesResponse ->
             handleEpisodes(episodesResponse)
             handleChannels(channelsResponse)
             handleCategories(categoriesResponse)
+            if (_uiState.value == UIEvent.Loading)
+                _uiState.value = UIEvent.Success
         }
     }
 
@@ -45,6 +52,7 @@ class MainVM @Inject constructor(
                 _categories.value = categoriesResponse.data.categories
             }
             is DataResponse.Error -> {
+                _uiState.value = UIEvent.Error(categoriesResponse.error.message)
                 _categories.value = null
             }
         }
@@ -56,6 +64,7 @@ class MainVM @Inject constructor(
                 _episodes.value = episodesResponse.data.media
             }
             is DataResponse.Error -> {
+                _uiState.value = UIEvent.Error(episodesResponse.error.message)
                 _episodes.value = null
             }
         }
@@ -67,6 +76,7 @@ class MainVM @Inject constructor(
                 _channels.value = channelsResponse.data.channels
             }
             is DataResponse.Error -> {
+                _uiState.value = UIEvent.Error(channelsResponse.error.message)
                 _channels.value = null
             }
         }
