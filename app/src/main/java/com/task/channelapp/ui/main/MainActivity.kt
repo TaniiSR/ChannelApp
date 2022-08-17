@@ -22,8 +22,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, IMain>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModelObservers()
+        setListener()
         viewModel.getDataFromRepos(false)
         setUpRecyclerView()
+    }
+
+    private fun setListener() {
+        mViewBinding.swRefresh.setOnRefreshListener {
+            mViewBinding.swRefresh.isRefreshing = false
+            viewModel.getDataFromRepos(true)
+        }
     }
 
     private fun setUpRecyclerView() {

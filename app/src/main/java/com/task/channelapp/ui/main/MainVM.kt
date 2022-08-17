@@ -47,14 +47,18 @@ class MainVM @Inject constructor(
             handleEpisodes(episodesResponse)
             handleChannels(channelsResponse)
             handleCategories(categoriesResponse)
-            if (_uiState.value == UIEvent.Loading) {
-                val list: ArrayList<ChannelData> = arrayListOf()
-                list.add(ChannelData(episodes = _episodes.value ?: emptyList()))
-                list.addAll(channels.value ?: arrayListOf())
-                list.add(ChannelData(categories = _categories.value ?: emptyList()))
-                _totalChannel.value = list
-                _uiState.value = UIEvent.Success
-            }
+            setSuccessData()
+        }
+    }
+
+    private fun setSuccessData() {
+        if (_uiState.value == UIEvent.Loading) {
+            val list: ArrayList<ChannelData> = arrayListOf()
+            list.add(ChannelData(episodes = _episodes.value ?: emptyList()))
+            list.addAll(channels.value ?: arrayListOf())
+            list.add(ChannelData(categories = _categories.value ?: emptyList()))
+            _totalChannel.value = list
+            _uiState.value = UIEvent.Success
         }
     }
 

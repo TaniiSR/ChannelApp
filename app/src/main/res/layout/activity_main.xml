@@ -17,19 +17,29 @@
         app:tbStartIconVisibility="false"
         app:tbTitleText="@string/screen_main_display_text_tb_title" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvChannels"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swRefresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/app_margin_extra_small"
-        android:orientation="vertical"
-        android:nestedScrollingEnabled="true"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tbView"
-        tools:itemCount="6"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/layout_item_episode"/>
+        app:layout_constraintTop_toBottomOf="@id/tbView">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChannels"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/app_margin_extra_small"
+            android:nestedScrollingEnabled="true"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tbView"
+            tools:itemCount="6"
+            tools:listitem="@layout/layout_item_episode" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
