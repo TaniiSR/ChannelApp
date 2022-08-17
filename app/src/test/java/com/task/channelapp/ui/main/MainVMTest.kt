@@ -199,15 +199,15 @@ class MainVMTest : BaseTestCase() {
             //3-verify
             Assert.assertEquals(
                 true,
-                viewModel.channels.getOrAwaitValue().isNotEmpty()
-            )
-            Assert.assertEquals(
-                true,
-                viewModel.episodes.getOrAwaitValue() == null
+                viewModel.episodes.getOrAwaitValue().isNotEmpty()
             )
             Assert.assertEquals(
                 true,
                 viewModel.categories.getOrAwaitValue() == null
+            )
+            Assert.assertEquals(
+                true,
+                viewModel.channels.getOrAwaitValue() == null
             )
             coVerify { episodeRep.getAllNewEpisodes(true) }
             coVerify { channelRepo.getAllChannels(true) }
