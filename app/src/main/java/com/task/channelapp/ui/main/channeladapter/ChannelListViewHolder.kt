@@ -17,7 +17,7 @@ import com.task.channelapp.utils.base.interfaces.OnItemClickListener
 import com.task.channelapp.utils.extensions.loadImage
 
 
-class EpisodeListViewHolder(private val binding: ViewBinding) :
+class ChannelListViewHolder(private val binding: ViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
     private val mediaListAdapter: MediaListAdapter = MediaListAdapter(mutableListOf())
     private val categoryListAdapter: CategoryListAdapter = CategoryListAdapter(mutableListOf())

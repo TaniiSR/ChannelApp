@@ -15,12 +15,12 @@ import com.task.channelapp.utils.base.BaseRecyclerAdapter
 
 class ChannelAdapter(
     private val list: MutableList<ChannelData>,
-) : BaseRecyclerAdapter<ChannelData, EpisodeListViewHolder>(list) {
-    override fun onCreateViewHolder(binding: ViewBinding): EpisodeListViewHolder {
-        return EpisodeListViewHolder(binding)
+) : BaseRecyclerAdapter<ChannelData, ChannelListViewHolder>(list) {
+    override fun onCreateViewHolder(binding: ViewBinding): ChannelListViewHolder {
+        return ChannelListViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: EpisodeListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChannelListViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         holder.onBind(list[position], position, onItemClickListener)
     }
