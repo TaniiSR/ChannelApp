@@ -40,12 +40,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, IMain>() {
         }
     }
 
-    private fun handEpisodes(episodes: List<MediaData>) {
-        viewModel.channelAdapter.updateChannelListItems(listOf(ChannelData(episodes = episodes)))
+    private fun handleChannels(channels: List<ChannelData>) {
+        viewModel.channelAdapter.updateChannelListItems(channels)
     }
 
     private fun viewModelObservers() {
-        observe(viewModel.episodes, ::handEpisodes)
+        observe(viewModel.totalChannel, ::handleChannels)
     }
+
 
 }

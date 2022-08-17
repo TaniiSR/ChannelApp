@@ -7,23 +7,27 @@ import androidx.viewbinding.ViewBinding
 import com.task.channelapp.R
 import com.task.channelapp.databinding.LayoutItemEpisodeChildBinding
 import com.task.channelapp.domain.dtos.MediaData
+import com.task.channelapp.domain.dtos.sealed.MediaType
 import com.task.channelapp.ui.main.channeladapter.diffutils.MediaDiffCallback
 import com.task.channelapp.utils.base.BaseRecyclerAdapter
 
-class EpisodeListAdapter(
+class MediaListAdapter(
     private val list: MutableList<MediaData>,
-) : BaseRecyclerAdapter<MediaData, EpisodeListItemViewHolder>(list) {
-    override fun onCreateViewHolder(binding: ViewBinding): EpisodeListItemViewHolder {
-        return EpisodeListItemViewHolder(binding)
+) : BaseRecyclerAdapter<MediaData, MediaListItemViewHolder>(list) {
+    override fun onCreateViewHolder(binding: ViewBinding): MediaListItemViewHolder {
+        return MediaListItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: EpisodeListItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MediaListItemViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         holder.onBind(list[position], position, onItemClickListener)
     }
 
     override fun getItemViewType(position: Int): Int {
-        return R.layout.layout_item_episode_child
+        return if (list[position].mediaType == MediaType.Episode)
+            R.layout.layout_item_episode_child
+        else
+            R.layout.layout_item_channel_child
     }
 
     override fun getItemCount(): Int = list.size

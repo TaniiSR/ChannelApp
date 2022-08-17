@@ -12,6 +12,7 @@ interface IMain : IBaseViewModel {
     val episodes: LiveData<List<MediaData>>
     val channels: LiveData<List<ChannelData>>
     val categories: LiveData<List<CategoryData>>
+    val totalChannel: LiveData<List<ChannelData>>
     val uiState: LiveData<UIEvent>
     val channelAdapter: ChannelAdapter
     fun getDataFromRepos(isRefresh: Boolean)

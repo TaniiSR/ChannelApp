@@ -31,6 +31,9 @@ class MainVM @Inject constructor(
     private val _categories: MutableLiveData<List<CategoryData>> = MutableLiveData()
     override val categories: LiveData<List<CategoryData>> = _categories
 
+    private val _totalChannel: MutableLiveData<List<ChannelData>> = MutableLiveData()
+    override val totalChannel: LiveData<List<ChannelData>> = _totalChannel
+
     private val _uiState: MutableLiveData<UIEvent> = MutableLiveData()
     override val uiState: LiveData<UIEvent> = _uiState
 
@@ -44,8 +47,13 @@ class MainVM @Inject constructor(
             handleEpisodes(episodesResponse)
             handleChannels(channelsResponse)
             handleCategories(categoriesResponse)
-            if (_uiState.value == UIEvent.Loading)
+            if (_uiState.value == UIEvent.Loading) {
+                val list: ArrayList<ChannelData> = arrayListOf()
+                list.add(ChannelData(episodes = _episodes.value ?: emptyList()))
+                list.addAll(channels.value ?: arrayListOf())
+                _totalChannel.value = list
                 _uiState.value = UIEvent.Success
+            }
         }
     }
 
