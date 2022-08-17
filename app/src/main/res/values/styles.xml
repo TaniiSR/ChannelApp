@@ -8,7 +8,7 @@
 
     <style name="shapeAppearance.App.RoundCorners.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">10%</item>
+        <item name="cornerSize">5%</item>
     </style>
 
 </resources>

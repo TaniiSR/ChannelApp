@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTitle"
+        style="@style/App.Widget.TextView.Grey.Bold.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/app_margin_medium"
+        android:layout_marginTop="@dimen/app_margin_small"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="0dp"
+        android:lines="1"
+        android:text="@string/screen_main_display_text_new_episode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/screen_main_display_text_new_episode" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEpisodeList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_margin_normal"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:itemCount="6"
+        tools:listitem="@layout/layout_item_episode_child"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="@dimen/app_margin_medium"
+        android:layout_marginTop="@dimen/app_margin_xl"
+        android:background="@color/appGreyLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvEpisodeList" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

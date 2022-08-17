@@ -13,6 +13,7 @@ import com.task.channelapp.data.remote.responsedtos.EpisodeResponse
 import com.task.channelapp.data.remote.services.channelservice.ChannelApi
 import com.task.channelapp.domain.base.DataResponse
 import com.task.channelapp.domain.dtos.*
+import com.task.channelapp.domain.dtos.sealed.MediaType
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -217,6 +218,7 @@ class DataRepositoryTest : BaseTestCase() {
                         title = media.title ?: "",
                         type = media.type ?: "",
                         coverAsset = media.coverAsset?.url ?: "",
+                        mediaType = MediaType.Episode,
                         channel = ChannelData(title = media.channel?.title ?: "")
                     )
                 } ?: listOf()
@@ -286,6 +288,7 @@ class DataRepositoryTest : BaseTestCase() {
                         title = media.title ?: "",
                         type = media.type ?: "",
                         coverAsset = media.coverAsset?.url ?: "",
+                        mediaType = MediaType.Episode,
                         channel = ChannelData(title = media.channel?.title ?: "")
                     )
                 } ?: listOf()
@@ -416,6 +419,7 @@ class DataRepositoryTest : BaseTestCase() {
                                 id = media.id,
                                 title = media.title ?: "",
                                 type = media.type ?: "",
+                                mediaType = MediaType.Channel,
                                 coverAsset = media.coverAsset?.url ?: ""
                             )
                         } ?: listOf(),
@@ -425,6 +429,7 @@ class DataRepositoryTest : BaseTestCase() {
                                 title = media.title ?: "",
                                 type = media.type ?: "",
                                 coverAsset = media.coverAsset?.url ?: "",
+                                mediaType = MediaType.Series,
                                 channel = ChannelData(title = media.channel?.title ?: "")
                             )
                         } ?: listOf()
@@ -512,6 +517,7 @@ class DataRepositoryTest : BaseTestCase() {
                                 id = media.id,
                                 title = media.title ?: "",
                                 type = media.type ?: "",
+                                mediaType = MediaType.Channel,
                                 coverAsset = media.coverAsset?.url ?: ""
                             )
                         } ?: listOf(),
@@ -521,6 +527,7 @@ class DataRepositoryTest : BaseTestCase() {
                                 title = media.title ?: "",
                                 type = media.type ?: "",
                                 coverAsset = media.coverAsset?.url ?: "",
+                                mediaType = MediaType.Series,
                                 channel = ChannelData(title = media.channel?.title ?: "")
                             )
                         } ?: listOf()

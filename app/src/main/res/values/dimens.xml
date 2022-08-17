@@ -32,8 +32,8 @@
     <dimen name="app_margin_normal">12dp</dimen>
     <dimen name="app_margin_medium">16dp</dimen>
     <dimen name="app_margin_large">24dp</dimen>
-    <dimen name="app_margin_xl">44dp</dimen>
-    <dimen name="app_margin_xxl">56dp</dimen>
+    <dimen name="app_margin_xl">36dp</dimen>
+    <dimen name="app_margin_xxl">46dp</dimen>
     <dimen name="app_margin_xxxl">80dp</dimen>
 
 

@@ -68,7 +68,7 @@
     </style>
 
     <style name="App.Widget.TextView.Grey.Bold.Small" parent="App.Widget.TextView.Grey.Bold">
-        <item name="android:textSize">@dimen/app_text_size_c3</item>
+        <item name="android:textSize">@dimen/app_text_size_c4</item>
     </style>
 
     <!--Grey SemiBold -->

@@ -4,7 +4,7 @@ import com.task.channelapp.data.remote.baseclient.erros.ApiError
 import com.task.channelapp.data.remote.baseclient.erros.ServerError
 import com.task.channelapp.data.remote.baseclient.interfaces.IRepository
 import com.task.channelapp.data.remote.baseclient.models.BaseApiResponse
-import com.task.channelapp.data.remote.baseclient.sealed.NetworkErrors
+import com.task.channelapp.domain.dtos.sealed.MediaType
 import retrofit2.Response
 import com.google.gson.stream.MalformedJsonException as MalformedJsonException1
 
@@ -49,16 +49,16 @@ abstract class BaseRepository : IRepository {
 
     override fun <T> detectError(response: Response<T>): ApiError {
         return when (response.code()) {
-            401 -> getApiError(mapError(NetworkErrors.SessionExpire, response.code()))
-            403 -> getApiError(mapError(NetworkErrors.Forbidden, response.code()))
-            404 -> getApiError(mapError(NetworkErrors.NotFound, response.code()))
-            502 -> getApiError(mapError(NetworkErrors.BadGateway, response.code()))
-            504 -> getApiError(mapError(NetworkErrors.NoInternet, response.code()))
-            in 400..500 -> getApiError(mapError(NetworkErrors.InternalServerError, response.code()))
-            -1009 -> getApiError(mapError(NetworkErrors.NoInternet, response.code()))
-            -1001 -> getApiError(mapError(NetworkErrors.RequestTimedOut, response.code()))
+            401 -> getApiError(mapError(MediaType.SessionExpire, response.code()))
+            403 -> getApiError(mapError(MediaType.Forbidden, response.code()))
+            404 -> getApiError(mapError(MediaType.NotFound, response.code()))
+            502 -> getApiError(mapError(MediaType.BadGateway, response.code()))
+            504 -> getApiError(mapError(MediaType.NoInternet, response.code()))
+            in 400..500 -> getApiError(mapError(MediaType.InternalServerError, response.code()))
+            -1009 -> getApiError(mapError(MediaType.NoInternet, response.code()))
+            -1001 -> getApiError(mapError(MediaType.RequestTimedOut, response.code()))
             else -> {
-                getApiError(mapError(NetworkErrors.UnknownError(), response.code()))
+                getApiError(mapError(MediaType.UnknownError(), response.code()))
             }
         }
     }
@@ -71,20 +71,20 @@ abstract class BaseRepository : IRepository {
         )
     }
 
-    private fun mapError(error: NetworkErrors, code: Int = 0): ServerError {
+    private fun mapError(error: MediaType, code: Int = 0): ServerError {
         return when (error) {
 
-            is NetworkErrors.NoInternet, NetworkErrors.RequestTimedOut -> ServerError(
+            is MediaType.NoInternet, MediaType.RequestTimedOut -> ServerError(
                 code,
                 defaultConnectionErrorMessage
             )
 
-            is NetworkErrors.BadGateway -> ServerError(code, defaultErrorMessage)
-            is NetworkErrors.NotFound -> ServerError(code, defaultErrorMessage)
-            is NetworkErrors.Forbidden -> ServerError(code, accessDeniedErrorMsg)
-            is NetworkErrors.InternalServerError -> ServerError(code, defaultMessage)
-            is NetworkErrors.SessionExpire -> ServerError(code, defaultSessionMessage)
-            is NetworkErrors.UnknownError -> ServerError(code, defaultErrorMessage)
+            is MediaType.BadGateway -> ServerError(code, defaultErrorMessage)
+            is MediaType.NotFound -> ServerError(code, defaultErrorMessage)
+            is MediaType.Forbidden -> ServerError(code, accessDeniedErrorMsg)
+            is MediaType.InternalServerError -> ServerError(code, defaultMessage)
+            is MediaType.SessionExpire -> ServerError(code, defaultSessionMessage)
+            is MediaType.UnknownError -> ServerError(code, defaultErrorMessage)
             else -> ServerError(code, defaultErrorMessage)
         }
     }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clMain"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/app_margin_medium">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivImage"
+        android:layout_width="140dp"
+        android:layout_height="210dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        tools:background="@color/appPrimaryTwo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/shapeAppearance.App.RoundCorners.MediumComponent"
+        tools:src="@drawable/ic_launcher_foreground" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTitle"
+        style="@style/App.Widget.TextView.White.Bold.Normal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_margin_small"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:lineSpacingExtra="0dp"
+        app:layout_constraintEnd_toEndOf="@id/ivImage"
+        app:layout_constraintStart_toStartOf="@id/ivImage"
+        app:layout_constraintTop_toBottomOf="@id/ivImage"
+        tools:text="@string/screen_main_display_text_new_episode" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvChannelName"
+        style="@style/App.Widget.TextView.Grey.Bold.Small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_margin_small"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:lineSpacingExtra="0dp"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="@id/ivImage"
+        app:layout_constraintStart_toStartOf="@id/ivImage"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:textAllCaps="true"
+        tools:text="@string/screen_main_display_text_new_episode" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

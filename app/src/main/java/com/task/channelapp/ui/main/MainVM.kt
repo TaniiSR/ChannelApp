@@ -7,6 +7,7 @@ import com.task.channelapp.domain.dtos.*
 import com.task.channelapp.domain.interfaces.ICategoryDataRepo
 import com.task.channelapp.domain.interfaces.IChannelDataRepo
 import com.task.channelapp.domain.interfaces.IEpisodeDataRepo
+import com.task.channelapp.ui.main.channeladapter.ChannelAdapter
 import com.task.channelapp.utils.base.BaseViewModel
 import com.task.channelapp.utils.base.sealed.UIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,6 +33,8 @@ class MainVM @Inject constructor(
 
     private val _uiState: MutableLiveData<UIEvent> = MutableLiveData()
     override val uiState: LiveData<UIEvent> = _uiState
+
+    override val channelAdapter: ChannelAdapter = ChannelAdapter(mutableListOf())
 
     override fun getDataFromRepos(isRefresh: Boolean) {
         _uiState.value = UIEvent.Loading

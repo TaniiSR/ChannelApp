@@ -1,4 +1,5 @@
 <resources>
     <string name="screen_main_display_text_tb_title">Channels</string>
+    <string name="screen_main_display_text_new_episode">New Episode</string>
 
 </resources>

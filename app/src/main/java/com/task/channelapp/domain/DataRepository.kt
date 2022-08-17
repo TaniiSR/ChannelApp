@@ -13,6 +13,7 @@ import com.task.channelapp.data.remote.services.channelservice.ChannelApi
 import com.task.channelapp.domain.base.DataError
 import com.task.channelapp.domain.base.DataResponse
 import com.task.channelapp.domain.dtos.*
+import com.task.channelapp.domain.dtos.sealed.MediaType
 import com.task.channelapp.domain.interfaces.ICategoryDataRepo
 import com.task.channelapp.domain.interfaces.IChannelDataRepo
 import com.task.channelapp.domain.interfaces.IEpisodeDataRepo
@@ -71,6 +72,7 @@ class DataRepository @Inject constructor(
                         title = entity.title ?: "",
                         type = entity.type ?: "",
                         coverAsset = entity.coverAsset ?: "",
+                        mediaType = MediaType.Episode,
                         channel = ChannelData(title = entity.channel?.title ?: "")
                     )
                 }
@@ -87,6 +89,7 @@ class DataRepository @Inject constructor(
                                     title = it.title ?: "",
                                     type = it.type ?: "",
                                     coverAsset = it.coverAsset?.url ?: "",
+                                    mediaType = MediaType.Episode,
                                     channel = ChannelData(title = it.channel?.title ?: "")
                                 )
                             }
@@ -131,6 +134,7 @@ class DataRepository @Inject constructor(
                                 id = media.id,
                                 title = media.title ?: "",
                                 type = media.type ?: "",
+                                mediaType = MediaType.Channel,
                                 coverAsset = media.coverAsset ?: ""
                             )
                         } ?: listOf(),
@@ -139,6 +143,7 @@ class DataRepository @Inject constructor(
                                 id = media.id,
                                 title = media.title ?: "",
                                 type = media.type ?: "",
+                                mediaType = MediaType.Series,
                                 coverAsset = media.coverAsset ?: "",
                                 channel = ChannelData(title = media.channel?.title ?: "")
                             )
@@ -164,6 +169,7 @@ class DataRepository @Inject constructor(
                                             id = media.id,
                                             title = media.title ?: "",
                                             type = media.type ?: "",
+                                            mediaType = MediaType.Channel,
                                             coverAsset = media.coverAsset?.url ?: ""
                                         )
                                     } ?: listOf(),
@@ -172,6 +178,7 @@ class DataRepository @Inject constructor(
                                             id = media.id,
                                             title = media.title ?: "",
                                             type = media.type ?: "",
+                                            mediaType = MediaType.Series,
                                             coverAsset = media.coverAsset?.url ?: "",
                                             channel = ChannelData(
                                                 title = media.channel?.title ?: ""

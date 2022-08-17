@@ -17,4 +17,17 @@
         app:tbStartIconVisibility="false"
         app:tbTitleText="@string/screen_main_display_text_tb_title" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChannels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_margin_extra_small"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbView"
+        tools:itemCount="6"
+        tools:listitem="@layout/layout_item_episode"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
