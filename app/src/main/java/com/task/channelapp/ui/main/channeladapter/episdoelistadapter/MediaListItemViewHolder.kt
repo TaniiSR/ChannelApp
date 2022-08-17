@@ -5,9 +5,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.task.channelapp.R
-import com.task.channelapp.databinding.LayoutItemChannelBinding
 import com.task.channelapp.databinding.LayoutItemChannelChildBinding
 import com.task.channelapp.databinding.LayoutItemEpisodeChildBinding
+import com.task.channelapp.databinding.LayoutItemSeriesChildBinding
 import com.task.channelapp.domain.dtos.MediaData
 import com.task.channelapp.utils.base.interfaces.OnItemClickListener
 import com.task.channelapp.utils.extensions.loadImage
@@ -23,12 +23,31 @@ class MediaListItemViewHolder(private val binding: ViewBinding) :
         onItemClickListener: OnItemClickListener?
     ) {
         when (binding) {
-            is LayoutItemEpisodeChildBinding -> {
+            is LayoutItemEpisodeChildBinding ->
                 handleEpisodeBinding(data, position, onItemClickListener, binding)
-            }
-            is LayoutItemChannelChildBinding -> {
+            is LayoutItemChannelChildBinding ->
                 handleChannelBinding(data, position, onItemClickListener, binding)
-            }
+            is LayoutItemSeriesChildBinding ->
+                handleSeriesBinding(data, position, onItemClickListener, binding)
+        }
+    }
+
+    private fun handleSeriesBinding(
+        data: MediaData,
+        position: Int,
+        onItemClickListener: OnItemClickListener?,
+        binding: LayoutItemSeriesChildBinding
+    ) {
+        binding.ivImage.loadImage(
+            data.coverAsset,
+            ContextCompat.getDrawable(
+                binding.ivImage.context,
+                R.drawable.ic_launcher_background
+            )
+        )
+        binding.tvTitle.text = data.title
+        binding.clMain.setOnClickListener {
+            onItemClickListener?.onItemClick(it, data, position)
         }
     }
 

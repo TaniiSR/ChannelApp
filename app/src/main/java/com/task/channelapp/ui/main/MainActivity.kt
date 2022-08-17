@@ -36,6 +36,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, IMain>() {
                 is MediaData -> {
                     showToast(data.title)
                 }
+                is ChannelData ->
+                    showToast(data.title)
             }
         }
     }

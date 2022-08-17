@@ -7,6 +7,7 @@ import androidx.viewbinding.ViewBinding
 import com.task.channelapp.R
 import com.task.channelapp.databinding.LayoutItemChannelBinding
 import com.task.channelapp.databinding.LayoutItemEpisodeBinding
+import com.task.channelapp.databinding.LayoutItemSeriesBinding
 import com.task.channelapp.domain.dtos.ChannelData
 import com.task.channelapp.utils.base.BaseRecyclerAdapter
 
@@ -25,6 +26,8 @@ class ChannelAdapter(
     override fun getItemViewType(position: Int): Int {
         return if (!list[position].episodes.isNullOrEmpty())
             R.layout.layout_item_episode
+        else if (!list[position].series.isNullOrEmpty())
+            R.layout.layout_item_series
         else
             R.layout.layout_item_channel
     }
@@ -38,6 +41,11 @@ class ChannelAdapter(
     ): ViewBinding {
         return when (viewType) {
             R.layout.layout_item_episode -> LayoutItemEpisodeBinding.inflate(
+                layoutInflater,
+                viewGroup,
+                false
+            )
+            R.layout.layout_item_series -> LayoutItemSeriesBinding.inflate(
                 layoutInflater,
                 viewGroup,
                 false

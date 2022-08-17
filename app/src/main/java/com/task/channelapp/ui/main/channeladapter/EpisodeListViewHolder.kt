@@ -8,6 +8,7 @@ import androidx.viewbinding.ViewBinding
 import com.task.channelapp.R
 import com.task.channelapp.databinding.LayoutItemChannelBinding
 import com.task.channelapp.databinding.LayoutItemEpisodeBinding
+import com.task.channelapp.databinding.LayoutItemSeriesBinding
 import com.task.channelapp.domain.dtos.ChannelData
 import com.task.channelapp.ui.main.channeladapter.episdoelistadapter.MediaListAdapter
 import com.task.channelapp.utils.base.interfaces.OnItemClickListener
@@ -16,8 +17,8 @@ import com.task.channelapp.utils.extensions.loadImage
 
 class EpisodeListViewHolder(private val binding: ViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    private val episodeAdapter: MediaListAdapter = MediaListAdapter(mutableListOf())
     private val mediaListAdapter: MediaListAdapter = MediaListAdapter(mutableListOf())
+    private val maxItemsSize: Int = 6
 
     @SuppressLint("SetTextI18n")
     fun onBind(
@@ -27,9 +28,9 @@ class EpisodeListViewHolder(private val binding: ViewBinding) :
     ) {
         when (binding) {
             is LayoutItemEpisodeBinding -> {
-                episodeAdapter.onItemClickListener = onItemClickListener
-                episodeAdapter.updateEpisodeListItems(data.episodes)
-                binding.rvEpisodeList.adapter = episodeAdapter
+                mediaListAdapter.onItemClickListener = onItemClickListener
+                mediaListAdapter.updateEpisodeListItems(data.episodes)
+                binding.rvEpisodeList.adapter = mediaListAdapter
             }
             is LayoutItemChannelBinding -> {
                 binding.tvTitle.text = data.title
@@ -46,8 +47,37 @@ class EpisodeListViewHolder(private val binding: ViewBinding) :
                 )
                 mediaListAdapter.onItemClickListener =
                     getItemClickItemListener(data, position, onItemClickListener)
-                mediaListAdapter.updateEpisodeListItems(data.latestMedia)
+                mediaListAdapter.updateEpisodeListItems(
+                    if (data.latestMedia.size > maxItemsSize) data.latestMedia.subList(
+                        0,
+                        maxItemsSize
+                    ) else data.latestMedia
+                )
                 binding.rvChannelList.adapter = mediaListAdapter
+            }
+
+            is LayoutItemSeriesBinding -> {
+                binding.tvTitle.text = data.title
+                binding.tvCount.text = binding.tvCount.context.getString(
+                    R.string.screen_main_display_text_series,
+                    data.series.size.toString()
+                )
+                binding.ivChannelIcon.loadImage(
+                    data.iconAsset,
+                    ContextCompat.getDrawable(
+                        binding.ivChannelIcon.context,
+                        R.drawable.ic_launcher_background
+                    )
+                )
+                mediaListAdapter.onItemClickListener =
+                    getItemClickItemListener(data, position, onItemClickListener)
+                mediaListAdapter.updateEpisodeListItems(
+                    if (data.series.size > maxItemsSize) data.series.subList(
+                        0,
+                        maxItemsSize
+                    ) else data.series
+                )
+                binding.rvSeriesList.adapter = mediaListAdapter
             }
         }
     }
