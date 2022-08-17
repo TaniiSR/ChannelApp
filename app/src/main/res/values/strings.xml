@@ -4,5 +4,8 @@
     <string name="screen_main_display_text_episodes">%1s episode</string>
     <string name="screen_main_display_text_series">%1s series</string>
     <string name="screen_main_display_text_categories_title">Browse by categories</string>
+    <string name="screen_main_display_text_error">Something went wrong</string>
+    <string name="screen_main_display_text_error_description">An alien is probably blocking your signal</string>
+    <string name="screen_main_button_text_Retry">Retry</string>
 
 </resources>

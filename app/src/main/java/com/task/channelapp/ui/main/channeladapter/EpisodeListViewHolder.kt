@@ -45,7 +45,7 @@ class EpisodeListViewHolder(private val binding: ViewBinding) :
                     data.iconAsset,
                     ContextCompat.getDrawable(
                         binding.ivChannelIcon.context,
-                        R.drawable.ic_launcher_background
+                        R.drawable.ic_mindvalley
                     )
                 )
                 mediaListAdapter.onItemClickListener =
@@ -69,7 +69,7 @@ class EpisodeListViewHolder(private val binding: ViewBinding) :
                     data.iconAsset,
                     ContextCompat.getDrawable(
                         binding.ivChannelIcon.context,
-                        R.drawable.ic_launcher_background
+                        R.drawable.ic_mindvalley
                     )
                 )
                 mediaListAdapter.onItemClickListener =

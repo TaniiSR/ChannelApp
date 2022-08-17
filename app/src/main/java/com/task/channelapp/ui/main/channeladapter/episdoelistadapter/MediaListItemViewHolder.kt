@@ -42,7 +42,7 @@ class MediaListItemViewHolder(private val binding: ViewBinding) :
             data.coverAsset,
             ContextCompat.getDrawable(
                 binding.ivImage.context,
-                R.drawable.ic_launcher_background
+                R.drawable.ic_mindvalley
             )
         )
         binding.tvTitle.text = data.title
@@ -61,7 +61,7 @@ class MediaListItemViewHolder(private val binding: ViewBinding) :
             data.coverAsset,
             ContextCompat.getDrawable(
                 binding.ivImage.context,
-                R.drawable.ic_launcher_background
+                R.drawable.ic_mindvalley
             )
         )
         binding.tvTitle.text = data.title
@@ -80,7 +80,7 @@ class MediaListItemViewHolder(private val binding: ViewBinding) :
             data.coverAsset,
             ContextCompat.getDrawable(
                 binding.ivImage.context,
-                R.drawable.ic_launcher_background
+                R.drawable.ic_mindvalley
             )
         )
         binding.tvTitle.text = data.title
