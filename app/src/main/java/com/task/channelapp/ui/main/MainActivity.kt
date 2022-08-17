@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import com.task.channelapp.databinding.ActivityMainBinding
+import com.task.channelapp.domain.dtos.CategoryData
 import com.task.channelapp.domain.dtos.ChannelData
 import com.task.channelapp.domain.dtos.MediaData
 import com.task.channelapp.utils.base.BaseActivity
@@ -38,6 +39,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, IMain>() {
                 }
                 is ChannelData ->
                     showToast(data.title)
+                is CategoryData ->
+                    showToast(data.name)
             }
         }
     }

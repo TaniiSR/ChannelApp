@@ -1,12 +1,12 @@
-package com.task.channelapp.ui.main.channeladapter
+package com.task.channelapp.ui.main.channeladapter.diffutils
 
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
-import com.task.channelapp.domain.dtos.ChannelData
+import com.task.channelapp.domain.dtos.CategoryData
 
-class ChannelDiffCallback(
-    val oldList: List<ChannelData>,
-    val newList: List<ChannelData>
+class CategoryDiffCallback(
+    val oldList: List<CategoryData>,
+    val newList: List<CategoryData>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size

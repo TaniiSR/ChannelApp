@@ -5,10 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
 import com.task.channelapp.R
+import com.task.channelapp.databinding.LayoutItemCategoriesBinding
 import com.task.channelapp.databinding.LayoutItemChannelBinding
 import com.task.channelapp.databinding.LayoutItemEpisodeBinding
 import com.task.channelapp.databinding.LayoutItemSeriesBinding
 import com.task.channelapp.domain.dtos.ChannelData
+import com.task.channelapp.ui.main.channeladapter.diffutils.ChannelDiffCallback
 import com.task.channelapp.utils.base.BaseRecyclerAdapter
 
 class ChannelAdapter(
@@ -24,12 +26,16 @@ class ChannelAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (!list[position].episodes.isNullOrEmpty())
-            R.layout.layout_item_episode
-        else if (!list[position].series.isNullOrEmpty())
-            R.layout.layout_item_series
-        else
-            R.layout.layout_item_channel
+        return when {
+            (!list[position].episodes.isNullOrEmpty()) ->
+                R.layout.layout_item_episode
+            (!list[position].series.isNullOrEmpty()) ->
+                R.layout.layout_item_series
+            (!list[position].categories.isNullOrEmpty()) ->
+                R.layout.layout_item_categories
+            else ->
+                R.layout.layout_item_channel
+        }
     }
 
     override fun getItemCount(): Int = list.size
@@ -50,6 +56,12 @@ class ChannelAdapter(
                 viewGroup,
                 false
             )
+            R.layout.layout_item_categories ->
+                LayoutItemCategoriesBinding.inflate(
+                    layoutInflater,
+                    viewGroup,
+                    false
+                )
             else -> LayoutItemChannelBinding.inflate(layoutInflater, viewGroup, false)
         }
     }

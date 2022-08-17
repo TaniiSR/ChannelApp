@@ -6,10 +6,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.task.channelapp.R
+import com.task.channelapp.databinding.LayoutItemCategoriesBinding
 import com.task.channelapp.databinding.LayoutItemChannelBinding
 import com.task.channelapp.databinding.LayoutItemEpisodeBinding
 import com.task.channelapp.databinding.LayoutItemSeriesBinding
 import com.task.channelapp.domain.dtos.ChannelData
+import com.task.channelapp.ui.main.channeladapter.categorylistadapter.CategoryListAdapter
 import com.task.channelapp.ui.main.channeladapter.episdoelistadapter.MediaListAdapter
 import com.task.channelapp.utils.base.interfaces.OnItemClickListener
 import com.task.channelapp.utils.extensions.loadImage
@@ -18,6 +20,7 @@ import com.task.channelapp.utils.extensions.loadImage
 class EpisodeListViewHolder(private val binding: ViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
     private val mediaListAdapter: MediaListAdapter = MediaListAdapter(mutableListOf())
+    private val categoryListAdapter: CategoryListAdapter = CategoryListAdapter(mutableListOf())
     private val maxItemsSize: Int = 6
 
     @SuppressLint("SetTextI18n")
@@ -29,7 +32,7 @@ class EpisodeListViewHolder(private val binding: ViewBinding) :
         when (binding) {
             is LayoutItemEpisodeBinding -> {
                 mediaListAdapter.onItemClickListener = onItemClickListener
-                mediaListAdapter.updateEpisodeListItems(data.episodes)
+                mediaListAdapter.updateMediaListItems(data.episodes)
                 binding.rvEpisodeList.adapter = mediaListAdapter
             }
             is LayoutItemChannelBinding -> {
@@ -47,7 +50,7 @@ class EpisodeListViewHolder(private val binding: ViewBinding) :
                 )
                 mediaListAdapter.onItemClickListener =
                     getItemClickItemListener(data, position, onItemClickListener)
-                mediaListAdapter.updateEpisodeListItems(
+                mediaListAdapter.updateMediaListItems(
                     if (data.latestMedia.size > maxItemsSize) data.latestMedia.subList(
                         0,
                         maxItemsSize
@@ -71,13 +74,18 @@ class EpisodeListViewHolder(private val binding: ViewBinding) :
                 )
                 mediaListAdapter.onItemClickListener =
                     getItemClickItemListener(data, position, onItemClickListener)
-                mediaListAdapter.updateEpisodeListItems(
+                mediaListAdapter.updateMediaListItems(
                     if (data.series.size > maxItemsSize) data.series.subList(
                         0,
                         maxItemsSize
                     ) else data.series
                 )
                 binding.rvSeriesList.adapter = mediaListAdapter
+            }
+            is LayoutItemCategoriesBinding -> {
+                categoryListAdapter.onItemClickListener = onItemClickListener
+                binding.rvCategoryList.adapter = categoryListAdapter
+                categoryListAdapter.updateCategoryListItems(data.categories)
             }
         }
     }

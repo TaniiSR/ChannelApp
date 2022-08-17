@@ -3,5 +3,6 @@
     <string name="screen_main_display_text_new_episode">New Episode</string>
     <string name="screen_main_display_text_episodes">%1s episode</string>
     <string name="screen_main_display_text_series">%1s series</string>
+    <string name="screen_main_display_text_categories_title">Browse by categories</string>
 
 </resources>

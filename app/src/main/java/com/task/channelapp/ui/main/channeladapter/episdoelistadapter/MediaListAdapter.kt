@@ -58,7 +58,7 @@ class MediaListAdapter(
         }
     }
 
-    fun updateEpisodeListItems(rateList: List<MediaData>) {
+    fun updateMediaListItems(rateList: List<MediaData>) {
         val diffCallback = MediaDiffCallback(list, rateList)
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
         this.setList(rateList)
